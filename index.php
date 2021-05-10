@@ -1,19 +1,17 @@
 <?php
 require_once('Connection.php');
 
-$conn = mysqli_connect("localhost", "root", "1z2x3c4v7777", "projeto3");
-        if ($conn -> connect_error){
-            die("connection failed:" . $conn -> connect_error);
-        }
+$conn = new Connection;
 
-        $sql = "SELECT id, name, quantity, price FROM products";
-        $result = $conn -> query($sql); 
+$sql = "SELECT id, name, quantity, price FROM products";
+$result = $conn -> connect()->prepare($sql);
+$result -> execute();
 
-        $sql = "SELECT id, SUM(quantity * price) AS total FROM products";
-        $somatotal = $conn -> query($sql);
+$sql = "SELECT id, SUM(quantity * price) AS total FROM products";
+$somatotal = $conn -> connect() -> prepare($sql);
+$somatotal -> execute();
 
 ?>
-
 
 <!DOCTYPE html>
 <html lang="pt">
@@ -42,19 +40,18 @@ $conn = mysqli_connect("localhost", "root", "1z2x3c4v7777", "projeto3");
         
 
         <?php
-               
-        if ($result -> num_rows > 0){
-            while ($row = $result -> fetch_assoc()){
-                echo "<tr>";
-                    echo "<td>" . $row["id"];
-                    echo "<td>" . $row["name"];
-                    echo "<td>" . $row["quantity"];
-                    echo "<td>" . $row["price"];
-            }
-        }
-        else {
-            echo "0 results found";
-        }             
+        if ($result -> rowCount() > 0){
+          while ($row = $result -> fetch(PDO::FETCH_ASSOC)){
+              echo "<tr>";
+                  echo "<td>" . $row["id"];
+                  echo "<td>" . $row["name"];
+                  echo "<td>" . $row["quantity"];
+                  echo "<td>" . $row["price"];
+          }
+      }
+      else {
+          echo "0 results found";
+      }            
         ?>
 
         
@@ -65,8 +62,8 @@ $conn = mysqli_connect("localhost", "root", "1z2x3c4v7777", "projeto3");
           <td></td>
           <td>Total</td>
           <?php
-          if ($somatotal -> num_rows > 0){
-            $row = $somatotal -> fetch_assoc();
+          if ($somatotal -> rowCount() > 0){
+            $row = $somatotal -> fetch(PDO::FETCH_ASSOC);
                 echo "<td>".$row['total'] ."</td>";           
             }
           ?>
@@ -77,3 +74,4 @@ $conn = mysqli_connect("localhost", "root", "1z2x3c4v7777", "projeto3");
 </body>
 
 </html>
+   

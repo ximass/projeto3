@@ -13,7 +13,7 @@ class Connection
   {
     if (self::$pdo == null) {
       try {
-        self::$pdo = new PDO('mysql:host=localhost;dbname=projeto3', 'root');
+        self::$pdo = new PDO('mysql:host=localhost;dbname=testetezus', 'root', '1z2x3c4v7777');
         self::$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
       } catch (Exception $e) {
         echo ('<p class="text-danger">ERRO AO CONECTAR NO BANCO DE DADOS PRESSIONE F5</p>');
