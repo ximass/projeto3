@@ -38,7 +38,6 @@ $somatotal -> execute();
       </thead>
       <tbody>       
         
-
         <?php
         if ($result -> rowCount() > 0){
           while ($row = $result -> fetch(PDO::FETCH_ASSOC)){
@@ -48,13 +47,12 @@ $somatotal -> execute();
                   echo "<td>" . $row["quantity"];
                   echo "<td>" . $row["price"];
           }
-      }
+        }
       else {
           echo "0 results found";
       }            
         ?>
 
-        
       </tbody>
       <tfoot class="bg-info">
         <tr class="table-dark">
@@ -65,7 +63,7 @@ $somatotal -> execute();
           if ($somatotal -> rowCount() > 0){
             $row = $somatotal -> fetch(PDO::FETCH_ASSOC);
                 echo "<td>".$row['total'] ."</td>";           
-            }
+          }
           ?>
         </tr>
       </tfoot>
